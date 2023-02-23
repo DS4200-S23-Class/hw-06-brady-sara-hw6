@@ -1,0 +1,23 @@
+/* 
+brady & sara hw 6
+stylesheet
+*/
+
+/* make all font arial */
+body{
+	font-family: Arial;
+}
+
+/* make text in this class centered */
+.centered {
+	text-align: center;
+}
+
+/* three evenly spaced columns */
+.columns {
+	display: flex;
+}
+
+.third-col {
+	width: 33.333%;
+}
