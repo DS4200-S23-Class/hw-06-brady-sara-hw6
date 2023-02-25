@@ -37,3 +37,13 @@ body{
 	fill: orangered;
 	opacity: 0.5;
 }
+
+.point {
+	opacity: 0.5;
+}
+
+.selected {
+	stroke: black;
+	stroke-width: 1px;
+	opacity: 1 !important;
+}
