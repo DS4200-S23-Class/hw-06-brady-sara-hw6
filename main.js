@@ -41,7 +41,7 @@ d3.csv("data/iris.csv").then((data) => {
 	    				.range([(VIS_HEIGHT),0]);
 
 	// plot
-	var mycirc = FRAME1.selectAll(".point")
+	let mycirc = FRAME1.selectAll(".point")
 					.data(data)
 	    			.enter().append("circle")
 	    						.attr("cx", d => {
@@ -68,26 +68,6 @@ d3.csv("data/iris.csv").then((data) => {
       			MARGINS.left + "," + (MARGINS.top) + ")")
       		.call(d3.axisLeft(Y_SCALE).ticks(15));
 
-    // Add brushing
-    FRAME1.call(d3.brush()                
-      .extent([[MARGINS.left, MARGINS.top], [VIS_WIDTH + MARGINS.right, VIS_HEIGHT + MARGINS.bottom]])
-      .on("start brush", updateChart)
-    );
-
-	// Function that is triggered when brushing is performed
-	function updateChart(event) {
-	extent = event.selection;
-
-	mycirc.classed("selected", function(d){ return isBrushed(extent, X_SCALE(parseFloat(d.Sepal_Length)) + MARGINS.left, Y_SCALE(parseFloat(d.Petal_Length)) + MARGINS.top ) } )
-	}
-
-	function isBrushed(brush_coords, cx, cy) {
-	   var x0 = brush_coords[0][0],
-	       x1 = brush_coords[1][0],
-	       y0 = brush_coords[0][1],
-	       y1 = brush_coords[1][1];
-	  return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
-	}
 
 });
 
@@ -119,7 +99,7 @@ d3.csv("data/iris.csv").then((data) => {
 	    				.range([(VIS_HEIGHT),0]);
 
 	// plot
-	var mycirc = FRAME2.selectAll(".point")
+	let mycirc = FRAME2.selectAll(".point")
 					.data(data)
 	    			.enter().append("circle")
 	    						.attr("cx", d => {
@@ -160,7 +140,7 @@ d3.csv("data/iris.csv").then((data) => {
 	}
 
 	function isBrushed(brush_coords, cx, cy) {
-	   var x0 = brush_coords[0][0],
+	   let x0 = brush_coords[0][0],
 	       x1 = brush_coords[1][0],
 	       y0 = brush_coords[0][1],
 	       y1 = brush_coords[1][1];
@@ -180,7 +160,6 @@ const FRAME3 = d3.select("#col3")
 d3.csv("data/iris.csv").then((data) => {
 
 
-	const MAX_Y3 = 50
 
 	const X_SCALE3 = d3.scaleBand()
 							.domain(data.map((d) => {return d.Species}))
@@ -188,24 +167,21 @@ d3.csv("data/iris.csv").then((data) => {
 
 	const Y_SCALE3 = d3.scaleLinear()
 							.range([VIS_HEIGHT, 0])
-							.domain([0, MAX_Y3]);
+							.domain([0, 50]);
 
 
 	// plot
-	var mybar = FRAME3.selectAll(".bar")
+	let mybar = FRAME3.selectAll(".bar")
 					.data(data)
 		    		.enter().append("rect")
 		    					.attr("class", "bar")
 		    					.attr("x", d => {
 		    							return X_SCALE3(d.Species) + MARGINS.left
 		    						})
-		    						.attr("y", d => {
-		    							return (Y_SCALE3(50))
-		    						})
+		    					.attr("y", 50)
 		    					.attr("width", X_SCALE3.bandwidth() - 5)
-		    					.attr("height", d => {
-		    						return (VIS_HEIGHT - Y_SCALE3(50))
-		    					})
+		    					.attr("height", VIS_HEIGHT)
+		    					
 		    					.attr("id", d => {return d.Species});
 
 	// add x-axis
@@ -221,26 +197,4 @@ d3.csv("data/iris.csv").then((data) => {
 	      		MARGINS.left + "," + (MARGINS.top) + ")")
 	      	.call(d3.axisLeft(Y_SCALE3));
 
-
-    // Add brushing
-    FRAME3.call(d3.brush()                
-      .extent([[MARGINS.left, MARGINS.top], [VIS_WIDTH + MARGINS.right, VIS_HEIGHT + MARGINS.bottom]])
-      .on("start brush", updateChart)
-    );
-
-	// Function that is triggered when brushing is performed
-	function updateChart(event) {
-	extent = event.selection;
-
-	mybar.classed("selected", function(d){ return isBrushed(extent, X_SCALE3((d.Sepal_Length)) + MARGINS.left, Y_SCALE3(50) + MARGINS.top ) } )
-	}
-
-	// not right for bar but im not sure
-	function isBrushed(brush_coords, cx, cy) {
-	    var x0 = brush_coords[0][0],
-	        x1 = brush_coords[1][0],
-	        y0 = brush_coords[0][1],
-	        y1 = brush_coords[1][1];
-	   return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
-	}
 });
