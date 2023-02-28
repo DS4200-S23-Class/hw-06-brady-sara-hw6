@@ -40,8 +40,8 @@ body{
 
 /* for brushing, change outline & opacity */
 .selected {
-	stroke: black;
-	stroke-width: 3px;
+	stroke: orange;
+	stroke-width: 2px;
 	opacity: 1 !important;
 }
 
