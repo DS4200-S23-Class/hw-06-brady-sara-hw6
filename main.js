@@ -152,75 +152,34 @@ d3.csv("data/iris.csv").then((data) => {
 	      		MARGINS.left + "," + (MARGINS.top) + ")")
 	      	.call(d3.axisLeft(Y_SCALE3));
 
-	// Add brushing
-    FRAME2.call(d3.brush()                
-      .extent([[MARGINS.left, MARGINS.top], [VIS_WIDTH + MARGINS.right, VIS_HEIGHT + MARGINS.bottom]])
-      .on("start brush", updateChart)
-    );
-  
-  // brushing function
-	function isBrushed(brush_coords, cx, cy) {
-	   let x0 = brush_coords[0][0],
-	       x1 = brush_coords[1][0],
-	       y0 = brush_coords[0][1],
-	       y1 = brush_coords[1][1];
-	  return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
-	}
+	  // Add brushing
+    FRAME2.call( d3.brush()                 
+            .extent([[0,0],[FRAME_WIDTH, FRAME_HEIGHT]]) 
+            .on("start brush", updateChart) 
+    )
 
+    // brushing function
+    function updateChart(event) {
+        const extent = event.selection;
+        // change the class of each point or bar if corresponding was brushed
+        mycirc1.classed("selected", function(d){
+        								return isBrushed(extent, 
+        								(X_SCALE2(d.Sepal_Width) + MARGINS.left), (Y_SCALE2(d.Petal_Width) + MARGINS.top))})                                                      
+        mybar.classed("selected", function(d){
+        								return isBrushed(extent, 
+        								(X_SCALE2(d.Sepal_Width) + MARGINS.left), (Y_SCALE2(d.Petal_Width) + MARGINS.top))})                                                           
+        mycirc2.classed("selected", function(d){
+        								return isBrushed(extent, 
+        								(X_SCALE2(d.Sepal_Width) + MARGINS.left), (Y_SCALE2(d.Petal_Width) + MARGINS.top))})   
+      };
 
-	// check for brushing
-	function updateChart(event) {
-		extent = event.selection;
-		mycirc2.classed("selected", function(d){ return isBrushed(extent, X_SCALE2(d.Petal_Width), Y_SCALE2(d.Sepal_Width) ) } )
-  	
-		// if no brushing, no points
-		if (extent == null) {
-			brushed_points = [];
-		}
-		else {
-			const [[x0, y0], [x1, y1]] = extent;
-			brushed_points = data.filter(d => {
-				return x0 <= X_SCALE2(d.Sepal_Width) &&
-				x1 >= X_SCALE2(d.Sepal_Width) &&
-				y0 <= Y_SCALE2(d.Petal_Width) &&
-				y1 >= Y_SCALE2(d.Petal_Width);
-			}).map(d => d.id);
-		}
-	};
-
-
-	mycirc2.selectAll("circle").style("opacity", function(d) {
-					if (brushed_points.includes(d.id)) {
-						return "1.0";
-					}
-					else {
-						return "0.5";
-					}
-
-
-	});
-
-	mycirc1.selectAll("circle").style("opacity", function(d) {
-					if (brushed_points.includes(d.id)) {
-						return "1.0";
-					}
-					else {
-						return "0.5";
-					}
-
-
-	});
-
-	mybar.selectAll("circle").style("opacity", function(d) {
-					if (brushed_points.includes(d.id)) {
-						return "1.0";
-					}
-					else {
-						return "0.5";
-					}
-
-
-	});
+  // brushing function, returns true or false if point is in selection area
+  function isBrushed(brush_coords, cx, cy) {
+       var x0 = brush_coords[0][0],
+           x1 = brush_coords[1][0],
+           y0 = brush_coords[0][1],
+           y1 = brush_coords[1][1];
+      return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1}; // returns TRUE or FALSE
 
 
 });
