@@ -24,17 +24,17 @@ body{
 
 /* coloring for different species */
 #setosa {
-	fill: #c0affb;
+	fill: #bd7ebe;
 	opacity: 0.5;
 }
 
 #versicolor {
-	fill: #cdcdcd;
+	fill: #7eb0d5;
 	opacity: 0.5;
 }
 
 #virginica {
-	fill: #5ecaab;
+	fill: #b2e061;
 	opacity: 0.5;
 }
 
