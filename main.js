@@ -34,15 +34,6 @@ const FRAME3 = d3.select("#col3")
 						.attr("width", FRAME_WIDTH)
 						.attr("class", "frame");
 
-// brushing function
-function isBrushed(brush_coords, cx, cy) {
-	   let x0 = brush_coords[0][0],
-	       x1 = brush_coords[1][0],
-	       y0 = brush_coords[0][1],
-	       y1 = brush_coords[1][1];
-	  return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
-	}
-
 // read data & make plots
 d3.csv("data/iris.csv").then((data) => {
 
@@ -167,10 +158,21 @@ d3.csv("data/iris.csv").then((data) => {
       .on("start brush", updateChart)
     );
   
+  // brushing function
+	function isBrushed(brush_coords, cx, cy) {
+	   let x0 = brush_coords[0][0],
+	       x1 = brush_coords[1][0],
+	       y0 = brush_coords[0][1],
+	       y1 = brush_coords[1][1];
+	  return x0 <= cx && cx <= x1 && y0 <= cy && cy <= y1;
+	}
+
 
 	// check for brushing
 	function updateChart(event) {
 		extent = event.selection;
+		mycirc2.classed("selected", function(d){ return isBrushed(extent, X_SCALE2(d.Petal_Width), Y_SCALE2(d.Sepal_Width) ) } )
+  	
 		// if no brushing, no points
 		if (extent == null) {
 			brushed_points = [];
