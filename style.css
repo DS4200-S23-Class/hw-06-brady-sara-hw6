@@ -24,30 +24,24 @@ body{
 
 /* coloring for different species */
 #setosa {
-	fill: limegreen;
+	fill: #c0affb;
 	opacity: 0.5;
 }
 
 #versicolor {
-	fill: rebeccapurple;
+	fill: #e6a176;
 	opacity: 0.5;
 }
 
 #virginica {
-	fill: orangered;
+	fill: #5ecaab;
 	opacity: 0.5;
 }
 
-.point {
-	opacity: 0.5;
-}
-
+/* for brushing, change outline & opacity */
 .selected {
 	stroke: black;
-	stroke-width: 1px;
+	stroke-width: 3px;
 	opacity: 1 !important;
 }
 
-.highlight {
-	opacity: 0.5;
-}
